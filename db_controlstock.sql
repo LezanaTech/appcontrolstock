@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2022 a las 19:08:00
+-- Tiempo de generación: 13-07-2024 a las 19:08:00
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -18,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `db_lezanatech`
+-- Base de datos: `db_controlstock`
 --
-CREATE DATABASE db_lezanatech
+CREATE DATABASE db_controlstock
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_spanish2_ci;
-USE db_lezanatech;
+USE db_controlstock;
 -- --------------------------------------------------------
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `categorias` (
 INSERT INTO `categorias` (`id`, `nombre`, `fecha`) VALUES
 (1, 'Abarrote', '2024-06-09 18:57:07'),
 (2, 'Sin Asignar', '2024-06-09 18:57:16'),
-(3, 'Garantia', '2022-06-09 16:54:18');
+(3, 'Garantia', '2024-06-09 16:54:18');
 
 -- --------------------------------------------------------
 
@@ -65,12 +65,12 @@ CREATE TABLE `entradap` (
 --
 
 INSERT INTO `entradap` (`id`, `codigo`, `descripcion`, `nombrecategoria`, `entrada`, `fecha`) VALUES
-(1, 201, 'Alicate', 1, 12, '2022-06-14 15:25:15'),
-(2, 201, 'Alicate', 1, 10, '2022-06-14 15:51:25'),
-(3, 201, 'Alicate', 1, 10, '2022-06-14 16:02:18'),
-(4, 76676878, 'Vamos', 2, 15, '2022-06-14 16:04:23'),
-(5, 201, 'Alicate', 1, 10, '2022-06-17 01:42:46'),
-(6, 201, 'Alicate', 1, 10, '2022-07-08 16:55:33');
+(1, 201, 'ProdOne', 1, 12, '2024-06-14 15:25:15'),
+(2, 201, 'ProdOne', 1, 10, '2024-06-14 15:51:25'),
+(3, 201, 'ProdOne', 1, 10, '2024-06-14 16:02:18'),
+(4, 76676878, 'ProdFour', 2, 15, '2024-06-14 16:04:23'),
+(5, 201, 'ProdOne', 1, 10, '2024-06-17 01:42:46'),
+(6, 201, 'ProdOne', 1, 10, '2024-07-08 16:55:33');
 
 -- --------------------------------------------------------
 
@@ -93,8 +93,8 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `idcategoria`, `codigo`, `descripcion`, `stock`, `precio`, `fecha`) VALUES
-(1, 1, '201', 'Alicate', 50, 200, '2022-07-08 16:55:33'),
-(2, 2, '76676878', 'Vamos', 20, 78, '2022-07-08 16:55:55');
+(1, 1, '201', 'ProdOne', 50, 200, '2024-07-08 16:55:33'),
+(2, 2, '76676878', 'ProdFour', 20, 78, '2024-07-08 16:55:55');
 
 -- --------------------------------------------------------
 
@@ -116,9 +116,9 @@ CREATE TABLE `salidap` (
 --
 
 INSERT INTO `salidap` (`id`, `codigo`, `descripcion`, `nombrecategoria`, `salida`, `fecha`) VALUES
-(1, '76676878', 'Vamos', '2', 5, '2022-06-14 16:23:20'),
-(2, '76676878', 'Vamos', '2', 10, '2022-06-17 01:43:02'),
-(3, '76676878', 'Vamos', '2', 10, '2022-07-08 16:55:55');
+(1, '76676878', 'ProdFour', '2', 5, '2024-06-14 16:23:20'),
+(2, '76676878', 'ProdFour', '2', 10, '2024-06-17 01:43:02'),
+(3, '76676878', 'ProdFour', '2', 10, '2024-07-08 16:55:55');
 
 -- --------------------------------------------------------
 
@@ -140,7 +140,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `fecha`) VALUES
-(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5au1mMwPFOiFOa2BiMswhkNpbB7hBZc6pa', 'Administrador', '2024-06-01 17:12:46'),
+(1, 'Juan Lezana', 'admin', '$2a$07$asxx54ahjppf45sd87a5au1mMwPFOiFOa2BiMswhkNpbB7hBZc6pa', 'Administrador', '2024-06-01 17:12:46'),
 (3, 'Logistica', 'logistica', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Logistica', '2024-06-01 18:17:38'),
 (4, 'Ecommerce', 'ecommerce', '$2a$07$asxx54ahjppf45sd87a5au1mMwPFOiFOa2BiMswhkNpbB7hBZc6pa', 'Ecommerce', '2024-06-01 17:30:58'),
 (5, 'Marketing', 'marketing', '$2a$07$asxx54ahjppf45sd87a5auEKl984fID33lyBClW7OSuuQkFCZQT9a', 'Marketing', '2024-06-01 17:31:17');
@@ -233,7 +233,7 @@ CREATE TABLE `clientes` (
   `nombre` varchar(150) NOT NULL,
   `direccion` varchar(150) NULL,
   `telefono` varchar(25) NULL,
-  `email` varchar(60) NULL,
+  `email` varchar(100) NULL,
   `transporte` text NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `estado` bit DEFAULT 1
@@ -244,7 +244,9 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nombre`, `direccion`, `telefono`, `email`, `transporte`, `fecha`, `estado`) VALUES
-(1, 'Consumidor Final', 'Anonima', '00000000', 'mail@mail.com', 'Sin Asignar', '2024-06-09 18:57:07', 1);
+(1, 'Consumidor Final', 'Anonima', '00000000', 'mail@mail.com', 'Sin Asignar', '2024-06-09 18:57:07', 1),
+(2, 'Juan Lezana', 'Anonima', '00000000', 'juan.lezana@gmail.com', 'Sin Asignar', '2024-06-09 18:57:07', 1),
+(3, 'Lezana Tech', 'Buenos Aires, Argentina', '00000000', 'info@lezanatech.com', 'Sin Asignar', '2024-06-09 18:57:07', 1);
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
